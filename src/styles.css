@@ -1,0 +1,41 @@
+html {
+    background-color: papayawhip;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.controls{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 200px;
+    background-color: burlywood;
+}
+
+.grid-container {
+    display: grid;
+    /* Means there are three columns, each with the same width. Would be here but is applied dynamically in index.js */
+    /* grid-template-columns: auto auto auto; */
+    column-gap: 10px;
+    row-gap: 10px;
+    background-color: burlywood;
+}
+
+/* regular container */
+.rc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px black;
+    border-radius: 10%;
+    height: 100px;
+    width: 100px;
+}
