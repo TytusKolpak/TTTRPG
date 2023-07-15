@@ -1,41 +1,83 @@
+:root {
+    --T_black: #000000;
+    --T_brown: #3D0000;
+    --T_crimson: #950101;
+    --T_red: #FF0000;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../lib/Inter-Regular.ttf') format('ttf'),
+}
+
 html {
-    background-color: papayawhip;
+    background-color: var(--T_black);
 }
 
 body {
+    color: tan;
     margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 10vw 90vw;
     height: 100vh;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
 }
 
-.controls{
+.controls {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     height: 100%;
-    width: 200px;
-    background-color: burlywood;
+    width: 100%;
+    background-color: var(--T_brown);
 }
 
 .grid-container {
+    margin: 10px;
     display: grid;
     /* Means there are three columns, each with the same width. Would be here but is applied dynamically in index.js */
     /* grid-template-columns: auto auto auto; */
-    column-gap: 10px;
-    row-gap: 10px;
-    background-color: burlywood;
 }
 
 /* regular container */
 .rc {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: solid 2px black;
-    border-radius: 10%;
-    height: 100px;
-    width: 100px;
+    background-color: var(--T_crimson);
+    border-radius: 5px;
+    margin: 1px;
+    height: auto;
+    width: auto;
+    position: relative;
+}
+
+button,
+input {
+    background-color: var(--T_red);
+    border: solid black 2px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+input {
+    width: 40px;
+}
+
+img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.player {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+ /* apply to text of rc */
+.cellNumber{
+    position: absolute;
+    bottom: 0;
+    /* Normally looks to far to the right */
+    right: 1px;
 }

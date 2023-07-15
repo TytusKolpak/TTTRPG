@@ -9,13 +9,23 @@
 </head>
 
 <body>
-    <div class="controls"> inputs here
-        <input type="number" id="numericInput" onchange="processValue()" placeholder="cells">
+    <div class="controls">
+        <p>Inputs here</p>
+        <div>
+            Cells: <input type="number" id="numericInput" onchange="createBoard()">
+        </div>
+        <button onclick="addPlayer()">Add a player</button>
     </div>
-    <div class="grid-container"> </div>
+    <div class="grid-container">
+    </div>
+
+
 </body>
 
 <script src="../lib/jquery-3.7.0.min.js"></script>
+
+<script src="player.js"></script>
+<!-- index uses player functions/data so it has to be after the player.js linking -->
 <script src="index.js"></script>
 
 </html>
