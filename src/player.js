@@ -14,7 +14,7 @@ function addPlayer() {
 }
 
 function displayPlayer(player) {
-    $("."+player.name).remove(); // remove any previous instances
+    $("." + player.name).remove(); // remove any previous instances
     var playerDiv = $("<div class='player'></div>");
     playerDiv.addClass(player.name);
     var image = $("<img>").attr("src", player.imageUrl);
@@ -64,11 +64,10 @@ $("html").keydown((event) => {
                 break;
         }
 
-        if (player.position == amountOfCells-1) {
-            console.log("You eat :E!");
-
-            // remove contents of last child of the board (so last cell)
+        if (player.position == amountOfCells - 1) {
+            // remove contents of last child of the board (so last cell`)
             board.children().eq(-1).children().remove();
+            alert("You win!")
         }
         displayPlayer(player)
     }
