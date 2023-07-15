@@ -10,7 +10,7 @@ function Player(position, speed, power, range, name, title, imageUrl) {
 }
 
 function addPlayer() {
-    player = new Player(1, 10, 50, 20, "Dracula", "Vampire Lord", "../img/dracula.png");
+    player = new Player(0, 10, 50, 20, "Dracula", "Vampire Lord", "../img/dracula.png");
     displayPlayer(player)
 }
 
@@ -65,9 +65,9 @@ $("html").keydown((event) => {
                 break;
         }
 
-        if (player.position == amountOfCells - 1 & !gameOver) {
+        if (player.position == randomCell & !gameOver) {
             // remove contents of last child of the board (so last cell`)
-            board.children().eq(-1).empty().promise().then(() => {
+            farmerCell.empty().promise().then(() => {
                 alert("You win! Game over.");
                 gameOver = true;
             });
