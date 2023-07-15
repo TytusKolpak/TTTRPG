@@ -1,3 +1,4 @@
+var gameOver;
 function Player(position, speed, power, range, name, title, imageUrl) {
     this.position = position;
     this.speed = speed;
@@ -64,10 +65,14 @@ $("html").keydown((event) => {
                 break;
         }
 
-        if (player.position == amountOfCells - 1) {
+        if (player.position == amountOfCells - 1 & !gameOver) {
             // remove contents of last child of the board (so last cell`)
-            board.children().eq(-1).children().remove();
-            alert("You win!")
+            board.children().eq(-1).empty().promise().then(() => {
+                alert("You win! Game over.");
+                gameOver = true;
+            });
+
+
         }
         displayPlayer(player)
     }
