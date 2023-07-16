@@ -14,7 +14,13 @@
         <div>
             Cells: <input type="number" id="numericInput" onchange="createBoard()">
         </div>
-        <button onclick="addEntities()">Add entitiess</button>
+        <button onclick="addEntities()">Add entities</button>
+
+        <input type="radio" name="gameMode" value="newEntity" id="newEntityRadio">
+        <label for="newEntityRadio">New Entity</label>
+
+        <input type="radio" name="gameMode" value="movement" id="movementRadio" checked>
+        <label for="movementRadio">Movement</label>
     </div>
     <div class="grid-container">
     </div>
@@ -25,6 +31,7 @@
 <script src="../lib/jquery-3.7.0.min.js"></script>
 
 <script src="player.js"></script>
+<script src="listeners.js"></script>
 <!-- index uses player functions/data so it has to be after the player.js linking -->
 <script src="index.js"></script>
 

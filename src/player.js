@@ -1,4 +1,4 @@
-var gameOver, farmerCellNumber, farmerCell;
+var gameOver, farmerCellNumber, farmerCell, turn, werewolfCellNumberArray = [];
 function Player(position, speed, power, range, name, title, imageUrl) {
     this.position = position;
     this.speed = speed;
@@ -10,7 +10,8 @@ function Player(position, speed, power, range, name, title, imageUrl) {
 }
 
 function addPlayer() {
-    player = new Player(0, 10, 50, 20, "Dracula", "Vampire Lord", "../img/dracula.png");
+    var initialPosition = Math.floor(Math.random() * amountOfCells);
+    player = new Player(initialPosition, 10, 50, 20, "Dracula", "Vampire Lord", "../img/dracula.png");
     displayPlayer(player)
 }
 
@@ -35,9 +36,9 @@ function addWerewolf() {
     while (werewolfCellNumber == player.position || werewolfCellNumber == farmerCellNumber) {
         werewolfCellNumber += 1;
     }
-
+    werewolfCellNumberArray.push(werewolfCellNumber);
     werewolfCell = board.children().eq(werewolfCellNumber)
-    var werewolf = $("<img>").attr("src", "../img/werewolf.png");
+    var werewolf = $("<img class='werewolf'>").attr("src", "../img/werewolf.png");
     $(werewolfCell).append(werewolf);
 }
 
@@ -52,51 +53,6 @@ function displayPlayer(player) {
     adjustSizes();
 }
 
-$("html").keydown((event) => {
-    if (player) {
-
-        switch (event.key) {
-            case "ArrowRight":
-                if ((player.position + 1) % columns == 0) {
-                    console.log("right border");
-                } else {
-                    player.position += 1;
-                }
-                break;
-
-            case "ArrowLeft":
-                if (player.position % columns == 0) {
-                    console.log("left border");
-                } else {
-                    player.position -= 1;
-                }
-                break;
-
-            case "ArrowUp":
-                if (player.position < columns) {
-                    console.log("top border");
-                } else {
-                    player.position -= columns;
-                }
-                break;
-
-            case "ArrowDown":
-                if (player.position > (amountOfCells - 1 - columns)) {
-                    console.log("bottom border")
-                } else {
-                    player.position += columns;
-                }
-                break;
-
-            default:
-                console.log("No binding.");
-                break;
-        }
-        displayPlayer(player)
-        checkGameOverConditions();
-    }
-});
-
 function checkGameOverConditions() {
 
     if (player.position == farmerCellNumber & !gameOver) {
@@ -107,12 +63,24 @@ function checkGameOverConditions() {
         });
     }
 
-    if (player.position == werewolfCellNumber & !gameOver) {
-        player = null
-        $(".player").empty().promise().then(() => {
-            alert("You lose! Game over.");
-            gameOver = true;
-        });
+    if (gameMode === "newEntity") {
+        if (werewolfCellNumberArray.includes(player.position) & !gameOver) {
+            player = null
+            $(".player").empty().promise().then(() => {
+                alert("You lose! Game over.");
+                gameOver = true;
+            });
+        }
+    }
+
+    if (gameMode === "movement") {
+        if (werewolfCellNumber == player.position & !gameOver) {
+            player = null
+            $(".player").empty().promise().then(() => {
+                alert("You lose! Game over.");
+                gameOver = true;
+            });
+        }
     }
 }
 
@@ -120,4 +88,42 @@ function addEntities() {
     addPlayer();
     addFarmer();
     addWerewolf();
+}
+
+function newWerewolfAppears() {
+    // Create a Werewolf on random cell
+    var werewolfCellNumber = Math.floor(Math.random() * amountOfCells);
+    werewolfCellNumberArray.push(werewolfCellNumber);
+    werewolfCell = board.children().eq(werewolfCellNumber)
+    var werewolf = $("<img class='werewolf'>").attr("src", "../img/werewolf.png");
+    $(werewolfCell).append(werewolf);
+}
+
+function werewolfMoves() {
+    // Create a Werewolf on random cell
+    $(".werewolf").remove();
+
+    // Difference in their positions
+    diff = werewolfCellNumber - player.position
+    console.log("werewolf", werewolfCellNumber, "player", player.position, "diff", werewolfCellNumber - player.position);
+
+    // Move towards player
+
+    if (diff > columns) {
+        // Go up
+        werewolfCellNumber -= columns;
+    } else if (diff < columns & diff > 0) {
+        // Go left
+        werewolfCellNumber -= 1;
+    } else if (diff > -columns) {
+        // Go right
+        werewolfCellNumber += 1;
+    } else {
+        // Go down
+        werewolfCellNumber += columns;
+    }
+
+    werewolfCell = board.children().eq(werewolfCellNumber)
+    var werewolf = $("<img class='werewolf'>").attr("src", "../img/werewolf.png");
+    $(werewolfCell).append(werewolf);
 }

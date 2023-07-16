@@ -12,7 +12,12 @@ window.onresize = () => {
 
 function init() {
     //better x by y lol
-    amountOfCells = 49
+
+    var initialMode = $('input[name="gameMode"]:checked').val();
+    handleGameModeChange(initialMode);
+
+    amountOfCells = 49;
+    turn = 0;
     createBoard(amountOfCells);
     addEntities();
     adjustSizes();
