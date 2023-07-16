@@ -1,4 +1,4 @@
-var columns, rows, player, amountOfCells, randomCell, farmerCell;
+var columns, rows, player, amountOfCells;
 const board = $(".grid-container");
 
 window.onload = (event) => {
@@ -14,7 +14,7 @@ function init() {
     //better x by y lol
     amountOfCells = 49
     createBoard(amountOfCells);
-    addPlayer();
+    addEntities();
     adjustSizes();
 }
 
@@ -88,15 +88,4 @@ function createBoard(size) {
 
     // Apply styles
     board.css("grid-template-columns", autos);
-
-    // Create a prey on random cell
-    randomCell = Math.floor(Math.random() * amountOfCells);
-
-    // I will leave it as 0 since i know that player position is 0 but he is not yet created
-    if (randomCell == 0) {
-        randomCell += 1;
-    }
-    farmerCell = board.children().eq(randomCell)
-    var farmer = $("<img>").attr("src", "../img/farmer.png");
-    $(farmerCell).append(farmer);
 }

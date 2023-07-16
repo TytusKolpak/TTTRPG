@@ -1,4 +1,4 @@
-var gameOver;
+var gameOver, farmerCellNumber, farmerCell;
 function Player(position, speed, power, range, name, title, imageUrl) {
     this.position = position;
     this.speed = speed;
@@ -14,19 +14,47 @@ function addPlayer() {
     displayPlayer(player)
 }
 
+function addFarmer() {
+    // Create a Farmer on random cell
+    farmerCellNumber = Math.floor(Math.random() * amountOfCells);
+
+    // Somewhere else than player
+    if (farmerCellNumber == player.position) {
+        farmerCellNumber += 1;
+    }
+    farmerCell = board.children().eq(farmerCellNumber)
+    var farmer = $("<img>").attr("src", "../img/farmer.png");
+    $(farmerCell).append(farmer);
+}
+
+function addWerewolf() {
+    // Create a Werewolf on random cell
+    werewolfCellNumber = Math.floor(Math.random() * amountOfCells);
+
+    // Can't be on the same as Werewolf or player
+    while (werewolfCellNumber == player.position || werewolfCellNumber == farmerCellNumber) {
+        werewolfCellNumber += 1;
+    }
+
+    werewolfCell = board.children().eq(werewolfCellNumber)
+    var werewolf = $("<img>").attr("src", "../img/werewolf.png");
+    $(werewolfCell).append(werewolf);
+}
+
 function displayPlayer(player) {
     $("." + player.name).remove(); // remove any previous instances
     var playerDiv = $("<div class='player'></div>");
     playerDiv.addClass(player.name);
     var image = $("<img>").attr("src", player.imageUrl);
     playerDiv.append(image);
-    var cell = board.children().eq(player.position)
-    cell.append(playerDiv);
+    var playerCell = board.children().eq(player.position)
+    playerCell.append(playerDiv);
     adjustSizes();
 }
 
 $("html").keydown((event) => {
     if (player) {
+
         switch (event.key) {
             case "ArrowRight":
                 if ((player.position + 1) % columns == 0) {
@@ -64,16 +92,32 @@ $("html").keydown((event) => {
                 console.log("No binding.");
                 break;
         }
-
-        if (player.position == randomCell & !gameOver) {
-            // remove contents of last child of the board (so last cell`)
-            farmerCell.empty().promise().then(() => {
-                alert("You win! Game over.");
-                gameOver = true;
-            });
-
-
-        }
         displayPlayer(player)
+        checkGameOverConditions();
     }
 });
+
+function checkGameOverConditions() {
+
+    if (player.position == farmerCellNumber & !gameOver) {
+        // First empty and only then show the message
+        farmerCell.empty().promise().then(() => {
+            alert("You win! Game over.");
+            gameOver = true;
+        });
+    }
+
+    if (player.position == werewolfCellNumber & !gameOver) {
+        player = null
+        $(".player").empty().promise().then(() => {
+            alert("You lose! Game over.");
+            gameOver = true;
+        });
+    }
+}
+
+function addEntities() {
+    addPlayer();
+    addFarmer();
+    addWerewolf();
+}
