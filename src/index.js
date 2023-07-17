@@ -16,7 +16,7 @@ function init() {
     var initialMode = $('input[name="gameMode"]:checked').val();
     handleGameModeChange(initialMode);
 
-    amountOfCells = 49;
+    amountOfCells = 144;
     turn = 0;
     createBoard(amountOfCells);
     addEntities();

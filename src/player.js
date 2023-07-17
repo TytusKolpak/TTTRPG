@@ -90,13 +90,15 @@ function addEntities() {
     addWerewolf();
 }
 
-function newWerewolfAppears() {
-    // Create a Werewolf on random cell
-    var werewolfCellNumber = Math.floor(Math.random() * amountOfCells);
-    werewolfCellNumberArray.push(werewolfCellNumber);
-    werewolfCell = board.children().eq(werewolfCellNumber)
-    var werewolf = $("<img class='werewolf'>").attr("src", "../img/werewolf.png");
-    $(werewolfCell).append(werewolf);
+function newWerewolfAppears(numberOfAppearances) {
+    for (let i = 0; i < numberOfAppearances; i++) {
+        // Create a Werewolf on random cell
+        var werewolfCellNumber = Math.floor(Math.random() * amountOfCells);
+        werewolfCellNumberArray.push(werewolfCellNumber);
+        werewolfCell = board.children().eq(werewolfCellNumber)
+        var werewolf = $("<img class='werewolf'>").attr("src", "../img/werewolf.png");
+        $(werewolfCell).append(werewolf);
+    }
 }
 
 function werewolfMoves() {

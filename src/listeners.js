@@ -56,7 +56,7 @@ $("html").keydown((event) => {
 
             // Done in this fashion to enable further expansion of game modes
             // Depending on game mode choose according werewolf actions
-            gameMode === "newEntity" && newWerewolfAppears();
+            gameMode === "newEntity" && newWerewolfAppears(2); // argument is the number of appearances per turn
             gameMode === "movement" && werewolfMoves();
 
         }
